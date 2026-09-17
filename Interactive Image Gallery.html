@@ -31,7 +31,7 @@
       margin-bottom: 2rem;
     }
 
-    /* 6-8 Image Grid */
+    
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -57,13 +57,13 @@
       transition: transform 0.4s ease, filter 0.4s ease;
     }
 
-    /* Hover Animation */
+    
     .gallery-item:hover img {
       transform: scale(1.08);
       filter: brightness(1.1);
     }
 
-    /* Lightbox Modal */
+    
     .lightbox {
       position: fixed;
       inset: 0;
@@ -119,7 +119,7 @@
   <h1>Interactive Gallery</h1>
   <p class="subtitle">Click any image to expand into full view</p>
 
-  <!-- 8 Image Grid -->
+  
   <div class="gallery-grid">
     <div class="gallery-item"><img src="https://picsum.photos/id/10/800/600" alt="Forest and River" /></div>
     <div class="gallery-item"><img src="https://picsum.photos/id/16/800/600" alt="Ocean Shore" /></div>
@@ -131,7 +131,7 @@
     <div class="gallery-item"><img src="https://picsum.photos/id/111/800/600" alt="Vintage Car" /></div>
   </div>
 
-  <!-- Lightbox Overlay -->
+  
   <div class="lightbox" id="lightbox">
     <span class="close-btn" id="closeBtn">&times;</span>
     <img id="lightboxImg" src="" alt="Enlarged preview" />
@@ -143,7 +143,7 @@
     const lightboxImg = document.getElementById('lightboxImg');
     const closeBtn = document.getElementById('closeBtn');
 
-    // Open lightbox on image click
+    
     galleryItems.forEach(img => {
       img.parentElement.addEventListener('click', () => {
         lightboxImg.src = img.src;
@@ -151,19 +151,19 @@
       });
     });
 
-    // Close on 'X' button click
+    
     closeBtn.addEventListener('click', () => {
       lightbox.classList.remove('active');
     });
 
-    // Close when clicking outside the preview image
+    
     lightbox.addEventListener('click', (e) => {
       if (e.target !== lightboxImg) {
         lightbox.classList.remove('active');
       }
     });
 
-    // Close with Escape key
+    
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         lightbox.classList.remove('active');
