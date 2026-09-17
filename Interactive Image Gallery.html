@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Image Gallery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    p.subtitle {
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+
+    /* 6-8 Image Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+      background: #1e293b;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    /* Hover Animation */
+    .gallery-item:hover img {
+      transform: scale(1.08);
+      filter: brightness(1.1);
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .lightbox.active img {
+      transform: scale(1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 300;
+      cursor: pointer;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .close-btn:hover {
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive Gallery</h1>
+  <p class="subtitle">Click any image to expand into full view</p>
+
+  <!-- 8 Image Grid -->
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://picsum.photos/id/10/800/600" alt="Forest and River" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/16/800/600" alt="Ocean Shore" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/28/800/600" alt="Mountain View" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/54/800/600" alt="Mountain Lake" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/57/800/600" alt="Architecture" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/65/800/600" alt="Cozy Cabin" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/88/800/600" alt="Sunset Coast" /></div>
+    <div class="gallery-item"><img src="https://picsum.photos/id/111/800/600" alt="Vintage Car" /></div>
+  </div>
+
+  <!-- Lightbox Overlay -->
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <img id="lightboxImg" src="" alt="Enlarged preview" />
+  </div>
+
+  <script>
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Open lightbox on image click
+    galleryItems.forEach(img => {
+      img.parentElement.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    // Close on 'X' button click
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    // Close when clicking outside the preview image
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== lightboxImg) {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
